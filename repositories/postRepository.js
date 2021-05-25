@@ -4,10 +4,20 @@ const User = require("../models/User");
 
 exports.findAllPosts = async () => {
   return await Post.findAll({
-    include: {
-      model: User,
-      attributes: ["name"],
-    },
+    include: [
+      {
+        model: User,
+        attributes: ["name"],
+      },
+      {
+        model: Comment,
+        attributes: ["content"],
+        include: {
+          model: User,
+          attributes: ["name"],
+        },
+      },
+    ],
   });
 };
 
