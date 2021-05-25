@@ -14,3 +14,13 @@ exports.findPostById = async (id) => {
 exports.insertPost = async (post) => {
   return await Post.create(post);
 };
+
+exports.updatePost = async (id, postDetails) => {
+  return await Post.update(postDetails, { where: { id } });
+};
+
+exports.deletePost = async (id) => {
+  return await Post.destroy({ where: { id } });
+  //const destroyedRow = await Post.destroy({ where: { id } });
+  //destroyedRow ? res.sendStatus(204) : res.sendStatus();
+};
