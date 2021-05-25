@@ -21,6 +21,4 @@ exports.updatePost = async (id, postDetails) => {
 
 exports.deletePost = async (id) => {
   return await Post.destroy({ where: { id } });
-  //const destroyedRow = await Post.destroy({ where: { id } });
-  //destroyedRow ? res.sendStatus(204) : res.sendStatus();
 };
