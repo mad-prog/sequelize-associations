@@ -18,3 +18,7 @@ exports.findAllComments = async () => {
 exports.deleteComment = async (id) => {
   return await Comment.destroy({ where: { id } });
 };
+
+exports.deleteAllComments = async (PostId) => {
+  return await Comment.destroy({ where: { PostId } });
+};

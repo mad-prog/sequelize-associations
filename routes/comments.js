@@ -30,4 +30,14 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.delete("/postid/:PostId", async (req, res) => {
+  try {
+    const { PostId } = req.params;
+    await commentService.deleteAllComments(PostId);
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;

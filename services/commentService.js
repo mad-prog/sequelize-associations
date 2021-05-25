@@ -14,3 +14,7 @@ exports.getAllComments = async () => {
 exports.deleteComment = async (id) => {
   await commentRepository.deleteComment(id);
 };
+
+exports.deleteAllComments = async (PostId) => {
+  await commentRepository.deleteAllComments(PostId);
+};
