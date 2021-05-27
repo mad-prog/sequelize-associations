@@ -1,5 +1,7 @@
 const userRepository = require("../repositories/userRepository");
 const encryptPassword = require("../utils/encryptPassword");
+const { updateSchema } = require("../validations/userValidation");
+const { generateToken } = require("./jwtService");
 
 exports.signup = async (userDetails) => {
   if (!userDetails.password || !userDetails.email) {
@@ -24,7 +26,9 @@ exports.login = async (email, password) => {
     throw new Error("Your password is incorrect");
   }
 
-  return user.toJSON();
+  const token = generateToken(user.id, user.email, user.role);
+
+  return token;
 };
 
 exports.getProfile = async (email) => {
@@ -37,5 +41,9 @@ exports.getAllProfiles = async () => {
 };
 
 exports.editProfile = async (id, userDetails) => {
-  await userRepository.updateUser(id, userDetails);
+  const validation = await updateSchema.validateAsync(userDetails);
+  if (validation.password) {
+    validation.password = await encryptPassword(validation.password);
+  }
+  await userRepository.updateUser(id, validation);
 };

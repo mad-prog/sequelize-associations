@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const commentService = require("../services/commentService");
+const roleValidation = require("../middleware/roleValidation");
 
-router.post("/", async (req, res) => {
+router.post("/", roleValidation("user"), async (req, res, next) => {
   try {
-    await commentService.createComment(req.body);
+    //gets user id from token
+    await commentService.createComment(req.user, req.body);
     res.sendStatus(201);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -20,10 +22,10 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", roleValidation("user"), async (req, res, next) => {
   try {
     const { id } = req.params;
-    await commentService.deleteComment(id);
+    await commentService.deleteComment(req.user, id);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });

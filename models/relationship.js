@@ -9,6 +9,13 @@ const loadModels = () => {
       allowNull: false,
     },
   });
+
+  User.hasMany(Comment, {
+    foreignKey: {
+      allowNull: false,
+    },
+  });
+
   Post.belongsTo(User);
   Post.hasMany(Comment, {
     foreignKey: {
@@ -17,6 +24,11 @@ const loadModels = () => {
   });
   Comment.belongsTo(User);
   Comment.belongsTo(Post);
+
+  //to empty all tables
+  // dbConnection
+  //   .sync({ force: true })
+  //   .then(() => console.log("All models loaded"));
 
   dbConnection.sync().then(() => console.log("All models loaded"));
 };

@@ -15,6 +15,10 @@ exports.findAllComments = async () => {
   });
 };
 
+exports.findCommentById = async (id) => {
+  return await Comment.findByPk(id);
+};
+
 exports.deleteComment = async (id) => {
   return await Comment.destroy({ where: { id } });
 };
